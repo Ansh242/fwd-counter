@@ -14,8 +14,6 @@ if (savedCount !== null) {
 updateScreen();
 function updateScreen() {
     countElement.innerText = count;
-
-    // Check status
     if (count > 0) {
         statusElement.innerText = "Positive";
     } else if (count < 0) {
@@ -23,7 +21,16 @@ function updateScreen() {
     } else {
         statusElement.innerText = "Zero";
     }
+
     localStorage.setItem("count", count);
+}
+function playSound() {
+  const audio = new Audio('beep.mp3');
+  audio.play();
+  setTimeout(() => {
+    audio.pause();
+    audio.currentTime = 0;
+  }, 800);
 }
 incButton.onclick = function() {
     let stepValue = parseInt(stepInput.value);
@@ -31,40 +38,38 @@ incButton.onclick = function() {
         stepValue = 1;
     }
     count = count + stepValue;
+    playSound();
     updateScreen();
 };
-
 decButton.onclick = function() {
     let stepValue = parseInt(stepInput.value);
     if (isNaN(stepValue)) {
         stepValue = 1;
     }
     count = count - stepValue;
+    playSound();
     updateScreen();
 };
-
 resButton.onclick = function() {
     count = 0;
+    playSound();
     updateScreen();
 };
-
 inc5Button.onclick = function() {
     count = count + 5;
+    playSound();
     updateScreen();
 };
-
 dec5Button.onclick = function() {
     count = count - 5;
+    playSound();
     updateScreen();
 };
-
-// Double click anywhere to reset
 document.ondblclick = function() {
     count = 0;
+    playSound();
     updateScreen();
 };
-
-// Keyboard controls
 document.onkeydown = function(event) {
     let stepValue = parseInt(stepInput.value);
     if (isNaN(stepValue)) {
@@ -73,9 +78,11 @@ document.onkeydown = function(event) {
 
     if (event.key === "ArrowUp") {
         count = count + stepValue;
+        playSound();
         updateScreen();
     } else if (event.key === "ArrowDown") {
         count = count - stepValue;
+        playSound();
         updateScreen();
     }
 };
